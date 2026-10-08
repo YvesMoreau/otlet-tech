@@ -67,6 +67,9 @@ Do not use ornamental "vintage" fonts.
 - Self-host the fonts (OFL permits it) rather than loading from a third-party CDN.
 - Keep text/background pairs accessible (WCAG AA contrast). Purple on white passes;
   check lavender before using it for text.
+- `.gitignore` tracks only the assets the page uses (a whitelist under `assets/*`). When
+  the page starts using another asset, add a `!assets/<file>` line, or it will not be
+  committed or published. Unused source files stay on disk, untracked.
 - `.devcontainer/`, `.vscode/` and `claude-devcontainer.sh` are environment files and
   are git-ignored. Do not commit them.
 

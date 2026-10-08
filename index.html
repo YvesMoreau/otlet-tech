@@ -3,12 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>otlet.tech</title>
+  <title>OTLET · Own The Limits · Ethics in Tech</title>
+  <meta name="description" content="OTLET: Own The Limits. Ethics in Tech. Coming soon.">
+  <link rel="icon" type="image/svg+xml" href="assets/Otlet_favicon.svg">
   <style>
-    body{margin:0;min-height:100vh;display:grid;place-items:center;
-         font-family:system-ui,sans-serif;background:#fafafa;color:#222}
-    h1{font-weight:600}
+    @font-face {
+      font-family: "Fira Sans";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("fonts/fira-sans-latin-500.woff2") format("woff2");
+    }
+    :root {
+      --purple-dark: #3A1556;
+      --purple: #612387;
+      --purple-mid: #8040B0;
+      --lavender: #CFBDF5;
+      --mist: #F1EBFC;
+      --manila-deep: #D9C48A;
+      --manila: #F2E2B0;
+      --manila-light: #F8F0D8;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      background: var(--manila-light);
+      color: var(--purple);
+      font-family: "Fira Sans", system-ui, sans-serif;
+    }
+    img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 65vh;
+    }
+    p {
+      margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
   </style>
 </head>
-<body><h1>OTLET<br>Own The Limits<br>Ethics in AI<br><br>Coming soon</h1></body>
+<body>
+  <main>
+    <img src="assets/Otlet_stacked.png" width="1663" height="2314"
+         alt="OTLET — Own The Limits. Ethics in Tech.">
+  </main>
+  <p>Coming soon</p>
+</body>
 </html>

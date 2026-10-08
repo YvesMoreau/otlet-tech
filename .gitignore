@@ -7,3 +7,8 @@ assets/*
 !assets/Otlet_stacked.png
 !assets/Otlet_stacked.webp
 !assets/icons/
+!assets/Otlet_wordmark_fancy.webp
+!assets/Otlet_wordmark_fancy_1200.png
+
+# Not yet public
+template.html

@@ -1,0 +1,357 @@
+/* OTLET site template
+   Tokens and fonts follow CLAUDE.md. Layout: wordmark, a row of divider tabs,
+   and the page body as the card behind the active tab. */
+
+/* ---------- Fonts (self-hosted, OFL) ---------- */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/fira-sans-latin-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/fira-sans-latin-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/fira-sans-latin-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/fira-sans-latin-500-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/fira-sans-latin-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Jost";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/jost-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-latin-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-latin-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/fira-code-latin-400.woff2") format("woff2");
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  --purple-dark: #3A1556;
+  --purple: #612387;
+  --purple-mid: #8040B0;
+  --lavender: #CFBDF5;
+  --mist: #F1EBFC;
+  --manila-deep: #D9C48A;
+  --manila: #F2E2B0;
+  --manila-light: #FAF5E3;
+  --white: #FFFFFF;
+
+  --font-heading: "Jost", "Futura", "Century Gothic", sans-serif;
+  --font-body: "Fira Sans", system-ui, sans-serif;
+  --font-mono: "Fira Code", "Fira Mono", ui-monospace, monospace;
+  --font-serif: "Source Serif 4", Georgia, serif;
+
+  --page-width: 64rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --rule: 1px solid var(--manila-deep);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--manila-light);
+  color: var(--purple-dark);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: var(--purple); text-underline-offset: 0.15em; }
+a:hover { color: var(--purple-mid); }
+
+:focus-visible {
+  outline: 3px solid var(--purple-mid);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--purple);
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); margin-top: 1.5em; }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 1em; }
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -3rem;
+  padding: 0.5rem 1rem;
+  background: var(--purple);
+  color: var(--white);
+  z-index: 10;
+}
+.skip-link:focus { top: 0.5rem; color: var(--white); }
+
+/* ---------- Header: wordmark ---------- */
+.site-header,
+.tabs,
+.card,
+.site-footer {
+  width: min(100% - 2 * var(--gutter), var(--page-width));
+  margin-inline: auto;
+}
+
+/* Wordmark left, tagline right; the tagline drops below on narrow screens */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-block: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+}
+
+.wordmark {
+  display: block;
+  width: clamp(12rem, 45vw, 22rem);
+}
+
+.tagline {
+  margin: 0;
+  color: var(--purple);
+  font-size: clamp(1.15rem, 2.8vw, 1.75rem);
+  line-height: 1.2;
+  text-align: right;
+  margin-left: auto;          /* stay right-aligned when wrapped below the wordmark */
+}
+.tagline strong,
+.tagline em { display: block; }
+.tagline strong { font-weight: 700; }
+.tagline em { font-weight: 500; font-style: italic; }
+
+/* ---------- Divider tabs ---------- */
+.tabs ul {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0 0 0 0.75rem;
+  list-style: none;
+  overflow-x: auto;           /* scroll the tab row, not the page, on narrow screens */
+  scrollbar-width: thin;
+  /* The card's top edge is drawn here, inside the scrolling row, so the active
+     tab can cover it (overflow clips anything that overlaps the card itself). */
+  background: linear-gradient(var(--manila-deep), var(--manila-deep)) bottom / 100% 1px no-repeat;
+}
+
+.tabs li { flex: 0 0 auto; }
+
+/* Each tab is an isosceles trapezoid with 75° base angles, drawn with clip-path:
+   ::before is the outline (top strip in --tab-top-colour, sides in --tab-edge),
+   ::after the fill, inset by the line widths. Each side rises 15° from vertical,
+   so it runs inward by height × tan 15° (0.26795). Tab heights are explicit so
+   that run can be computed. */
+.tabs a {
+  --tab-h: 2.5rem;
+  --tab-fill: var(--manila);
+  --tab-edge: var(--manila-deep);
+  --tab-top-colour: var(--manila-deep);
+  --tab-top-w: 1px;
+  --tab-run: calc(var(--tab-h) * 0.26795);
+  --tab-side: 1.0353px;       /* 1px line measured horizontally: 1 / cos 15° */
+  display: block;
+  position: relative;
+  isolation: isolate;
+  height: var(--tab-h);
+  padding: 0.5rem 1.75rem 0;  /* extra inline room for the slanted sides */
+  margin-bottom: 1px;         /* leave the card's top edge visible under inactive tabs */
+  color: var(--purple);
+  font-weight: 500;
+  line-height: 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tabs a::before,
+.tabs a::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.tabs a::before {
+  top: 0;
+  background: linear-gradient(var(--tab-top-colour) 0 var(--tab-top-w), var(--tab-edge) 0);
+  clip-path: polygon(0 100%, var(--tab-run) 0, calc(100% - var(--tab-run)) 0, 100% 100%);
+}
+.tabs a::after {
+  top: var(--tab-top-w);
+  background: var(--tab-fill);
+  clip-path: polygon(
+    var(--tab-side) 100%,
+    calc(var(--tab-run) - var(--tab-top-w) * 0.26795 + var(--tab-side)) 0,
+    calc(100% - var(--tab-run) + var(--tab-top-w) * 0.26795 - var(--tab-side)) 0,
+    calc(100% - var(--tab-side)) 100%
+  );
+}
+
+.tabs a:hover {
+  --tab-h: 2.7rem;            /* the tab lifts slightly */
+  --tab-fill: var(--manila-light);
+  color: var(--purple);
+}
+
+/* Index number on each divider, set like a catalogue-card entry */
+.tab-index {
+  margin-right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--purple-mid);
+}
+
+/* Active tab: joined to the card below */
+.tabs a[aria-current="page"] {
+  --tab-h: calc(2.85rem + 1px);
+  --tab-fill: var(--white);
+  --tab-top-colour: var(--purple);
+  --tab-top-w: 3px;
+  padding-top: 0.8rem;
+  margin-bottom: 0;           /* covers the card's top edge */
+}
+
+/* ---------- Card: the page body ---------- */
+.card {
+  position: relative;
+  background: var(--white);
+  border: var(--rule);
+  border-top: 0;              /* drawn by .tabs ul */
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  box-shadow: 0 1px 0 var(--manila-deep), 0 8px 24px -16px rgba(58, 21, 86, 0.35);
+}
+
+.card > :last-child { margin-bottom: 0; }
+
+.lead {
+  font-size: 1.2rem;
+  color: var(--purple);
+  max-width: 40em;
+}
+
+.prose { max-width: 40em; }
+
+/* ---------- Index-card label (metadata) ---------- */
+.label {
+  display: block;
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--purple);
+}
+
+/* ---------- Quotation ---------- */
+blockquote {
+  margin: 2rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--lavender);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--purple-dark);
+  max-width: 36em;
+}
+blockquote footer {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-style: normal;
+  color: var(--purple);
+}
+
+/* ---------- Entry cards (lists of articles, projects, people) ---------- */
+.entries {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem 1.25rem 1.25rem;
+  background: var(--manila-light);
+  border: var(--rule);
+  border-top: 3px solid var(--purple);
+  border-radius: 0.25rem;
+}
+.entry h3 { margin-bottom: 0.4rem; }
+.entry h3 a { text-decoration: none; }
+.entry h3 a:hover { text-decoration: underline; }
+.entry p { margin: 0; font-size: 0.95rem; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  padding-block: 2rem 3rem;
+  font-size: 0.875rem;
+  color: var(--purple);
+}
+.site-footer .label { margin: 0; }

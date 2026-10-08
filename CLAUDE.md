@@ -24,15 +24,15 @@ Contrast ratios are WCAG 2.x.
 | | `--mist` | `#F1EBFC` | Panels and cards on lavender or white pages |
 | Manila | `--manila-deep` | `#D9C48A` | Rules, borders, dividers. Decoration only, not for text |
 | | `--manila` | `#F2E2B0` | Accent surfaces: cards, badges, callouts |
-| | `--manila-light` | `#F8F0D8` | Default page background |
+| | `--manila-light` | `#FAF5E3` | Default page background (manila mixed 65% with white) |
 | Neutral | `--white` | `#FFFFFF` | Text on dark purple, inputs, white panels |
 
 Manila refers to the catalogue cards of Otlet's Répertoire (see the concept below).
 
-Text on the default background (`--manila-light`): `purple-dark` 12.98, `purple` 8.79,
-`purple-mid` 5.63. Text on `--purple-dark`: white 14.77, `manila-light` 12.98,
-`lavender` 8.62. `mist` and `manila-light` are nearly the same lightness (1.02:1), so
-do not place them side by side. There is no black or grey: `purple-dark` is the near-black.
+Text on the default background (`--manila-light`): `purple-dark` 13.53, `purple` 9.17,
+`purple-mid` 5.87. Text on `--purple-dark`: white 14.77, `manila-light` 13.53,
+`lavender` 8.62. `mist` and `manila-light` are nearly the same lightness (1.07:1), as are
+`white` and `manila-light` (1.09:1), so separate them with a border, not by colour alone. There is no black or grey: `purple-dark` is the near-black.
 
 ## Typography
 | Role | Font | Rationale |
@@ -59,9 +59,36 @@ Do not use ornamental "vintage" fonts.
 | `Otlet_stacked.webp` | 1000 px wide WebP of the stacked logo, used on the page with the PNG as fallback. |
 | `icons/` | `icon-192.png`, `icon-512.png` (transparent, for the manifest) and `apple-touch-icon.png` (180 px, on manila-light). |
 | `Otlet_wordmark_plain.png`, `Otlet_wordmark_fancy.png` | Wordmark variants. |
+| `Otlet_wordmark_fancy.webp`, `Otlet_wordmark_fancy_1200.png` | Fancy wordmark trimmed to its content, 1200×276, transparent. Site header (WebP with PNG fallback), with the tagline set as live text to its right. |
+| `Otlet_lateral.webp`, `Otlet_lateral_1400.png` | Trimmed lateral logo, 1400×529. Tried as the header, not used; untracked. |
 | `Otlet_emblem.png` | Emblem, full colour. |
 | `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-colour emblems. The white one is for dark or purple backgrounds. |
 | `Otlet_favicon.svg` | Favicon source (purple ring). The cleaned, square-viewBox copy served by the site is `favicon.svg` in the repo root, with `favicon.ico` (16/32/48) and `site.webmanifest`. |
+
+## Template
+`css/site.css` holds the tokens, `@font-face` rules and components. `template.html`
+(`noindex`) shows the layout: wordmark header, a row of divider tabs (`nav.tabs`, active
+tab marked with `aria-current="page"` and joined to the card below; each tab is an
+isosceles trapezoid with 75° base angles, drawn with `clip-path` from an explicit
+`--tab-h`, so change heights through that variable), the page body as a
+white card (`main.card`), index-card labels (`.label`), quotations and entry cards.
+`index.html` is still the standalone "Coming soon" page. `template.html` is git-ignored so
+it is not published; remove it from `.gitignore` when the site is ready to go public.
+
+## Fonts (`fonts/`)
+Latin-subset WOFF2 files from Fontsource (jsDelivr, pinned versions), each family with
+its OFL licence text: Fira Sans 400/400 italic/500/500 italic/700, Jost 600, Fira Code 400,
+Source Serif 4 400/400 italic/600. The Source Serif 4 licence is Adobe's original
+(`adobe-fonts/source-serif`), since Fontsource's copy lacks the copyright line.
+
+## Local preview
+- `python3 -m http.server 8000 --bind 127.0.0.1` from the repo root, then open
+  `http://127.0.0.1:8000/template.html`. The container image ships only
+  `python3-minimal`, which lacks `http.server`; install the `python3` package
+  (`sudo apt-get install -y python3`) until the dev container provides it.
+- Headless checks use Playwright with Chromium (installed outside the repo so far).
+  Render at desktop (1280 px) and mobile (390 px) widths and check for failed
+  requests, unloaded fonts and horizontal page scroll.
 
 ## Conventions
 - Self-host the fonts (OFL permits it) rather than loading from a third-party CDN.

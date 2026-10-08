@@ -55,11 +55,13 @@ Do not use ornamental "vintage" fonts.
 | File | Notes |
 |---|---|
 | `Otlet_lateral.png` | Wordmark with tagline, horizontal layout. Typographic source for wordmark and tag line. |
-| `Otlet_stacked.png` | Stacked logo layout. |
+| `Otlet_stacked.png` | Stacked logo layout (source, 1663×2314). |
+| `Otlet_stacked.webp` | 1000 px wide WebP of the stacked logo, used on the page with the PNG as fallback. |
+| `icons/` | `icon-192.png`, `icon-512.png` (transparent, for the manifest) and `apple-touch-icon.png` (180 px, on manila-light). |
 | `Otlet_wordmark_plain.png`, `Otlet_wordmark_fancy.png` | Wordmark variants. |
 | `Otlet_emblem.png` | Emblem, full colour. |
 | `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-colour emblems. The white one is for dark or purple backgrounds. |
-| `Otlet_favicon.svg` | Favicon. |
+| `Otlet_favicon.svg` | Favicon source (purple ring). The cleaned, square-viewBox copy served by the site is `favicon.svg` in the repo root, with `favicon.ico` (16/32/48) and `site.webmanifest`. |
 
 ## Conventions
 - Self-host the fonts (OFL permits it) rather than loading from a third-party CDN.

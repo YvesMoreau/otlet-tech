@@ -1,0 +1,13 @@
+title: OTLET
+description: "OTLET: Own The Limits. Ethics in Tech."
+url: "https://otlet.tech"
+baseurl: ""
+
+# Files that must not be copied into the built site
+exclude:
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - claude-devcontainer.sh
+  - vendor
+  - node_modules

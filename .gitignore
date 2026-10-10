@@ -10,5 +10,16 @@ assets/*
 !assets/Otlet_wordmark_fancy.webp
 !assets/Otlet_wordmark_fancy_1200.png
 
-# Not yet public
-template.html
+# Pages not yet public (remove a line to publish that page)
+about.html
+lineage.html
+
+# Jekyll and Bundler output
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# macOS folder metadata
+.DS_Store

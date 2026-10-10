@@ -8,8 +8,9 @@ from `YvesMoreau/otlet-tech` (branch `main`) at https://otlet.tech
 The site emphasizes the lineage of the organization with the work of Paul Otlet,
 Henri La Fontaine, and Léonie La Fontaine.
 
-Start as plain static HTML/CSS. Jekyll or another generator is deferred until the
-site has enough pages to need shared layouts.
+Built with Jekyll (3.10.0, the version GitHub Pages runs), which GitHub Pages builds on
+push. `index.html` has no front matter, so Jekyll copies it unchanged: it is still the live
+"Coming soon" page.
 
 ## Colour palette
 The three brand colours are purple, lavender and white. The rest extend them.
@@ -20,6 +21,7 @@ Contrast ratios are WCAG 2.x.
 | Purple | `--purple-dark` | `#3A1556` | Long-form body text, footers, dark sections |
 | | `--purple` | `#612387` | Brand colour: logo, headings, links, buttons |
 | | `--purple-mid` | `#8040B0` | Hover and focus states, secondary accents (large text only) |
+| | `--purple-muted` | `#715785` | Secondary text: labels, inactive tabs, footer, attributions (purple-dark mixed 72% with white). On white 6.17, manila-light 5.65, manila 4.78 |
 | Lavender | `--lavender` | `#CFBDF5` | Brand accent surfaces, tags, borders. Not for text on light backgrounds |
 | | `--mist` | `#F1EBFC` | Panels and cards on lavender or white pages |
 | Manila | `--manila-deep` | `#D9C48A` | Rules, borders, dividers. Decoration only, not for text |
@@ -65,15 +67,53 @@ Do not use ornamental "vintage" fonts.
 | `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-colour emblems. The white one is for dark or purple backgrounds. |
 | `Otlet_favicon.svg` | Favicon source (purple ring). The cleaned, square-viewBox copy served by the site is `favicon.svg` in the repo root, with `favicon.ico` (16/32/48) and `site.webmanifest`. |
 
-## Template
-`css/site.css` holds the tokens, `@font-face` rules and components. `template.html`
-(`noindex`) shows the layout: wordmark header, a row of divider tabs (`nav.tabs`, active
-tab marked with `aria-current="page"` and joined to the card below; each tab is an
-isosceles trapezoid with 75° base angles, drawn with `clip-path` from an explicit
-`--tab-h`, so change heights through that variable), the page body as a
-white card (`main.card`), index-card labels (`.label`), quotations and entry cards.
-`index.html` is still the standalone "Coming soon" page. `template.html` is git-ignored so
-it is not published; remove it from `.gitignore` when the site is ready to go public.
+## Site structure (Jekyll)
+| Path | Role |
+|---|---|
+| `_config.yml` | Site title, description, URL; `exclude` keeps `CLAUDE.md`, `Gemfile` etc. out of the build |
+| `_layouts/default.html` | Shared page: head, header, tabs, `main.card`, footer. Pages set `layout: default` |
+| `_includes/site-header.html`, `tabs.html`, `site-footer.html` | Header (wordmark + live tagline), divider tabs, footer |
+| `_data/nav.yml` | The tabs, in order. The active tab is the one whose `url` equals `page.url`. Add a tab only when its page has content |
+| `about.html` (`/about/`) | 001 About, 002 Principles (entry cards), 003 Our name (teaser linking to Lineage) |
+| `lineage.html` (`/lineage/`) | 001 A century-old question (Otlet, Henri and Léonie La Fontaine, Fig. 1), 002 Why it matters now (Fig. 2) |
+| `css/site.css` | Tokens, `@font-face` rules and all components |
+
+Page front matter: `title`, `permalink`, optional `description`, and `noindex: true` while
+the page is a draft. `body_class: long-form` sets the page's running text (`.prose > p`) in
+Source Serif 4 at 1.125rem; Lineage uses it, About stays in Fira Sans. Use `relative_url` for every internal link and asset path, since
+pages live in subfolders.
+
+`about.html` and `lineage.html` are git-ignored, so they are not published. To publish a
+page: remove its line from `.gitignore`, drop `noindex`, clear its `.placeholder` text, and
+whitelist the images it uses.
+
+Components: divider tabs (`nav.tabs`, active tab marked with `aria-current="page"` and
+joined to the card below; each tab is an isosceles trapezoid with 75° base angles, drawn
+with `clip-path` from an explicit `--tab-h`, so change heights through that variable).
+`main.card` holds `.record` sections separated by 1px rules. From 52rem wide, each
+record's catalogue data (`.meta`: classification number, heading, date) sits in a left
+margin column under a purple rule; below that width it is one line above the content.
+Figures (`.figure`) are framed like comic-strip panels (3px `purple-dark` ink line, a
+`manila-light` mat, a `manila-deep` hairline at its edge). The Lineage figures have no
+caption; the `figcaption` style (Fira Code, `Fig. n`) remains for later use. In running text, put the figure first inside its `.prose` block with
+`figure-right` or `figure-left`: from 40rem wide it floats at 60% of the column width and
+the text wraps round it; narrower, it is full width. The 38em measure is set on
+`.prose > p`, not on `.prose`, so floated figures align with the column edge. Entry cards
+(`.entries`/`.entry`) are catalogue cards. Text still to be written is marked
+`.placeholder` (dashed outline); none may remain at publication.
+
+The historical facts on both pages were drafted from model knowledge, not checked
+sources; verify them (Mundaneum archives; Rayward, *The Universe of Information*, 1975)
+before publishing.
+
+Page images are in `assets/images/` (WebP from the less saturated
+`Otlet_transformed_photograph/image1_612387.jpg` and `image6_612387.jpg`). They are
+git-ignored: confirm the rights to the source images, then whitelist them in
+`.gitignore`, before a page that uses them is published.
+
+Visual rules: purple is reserved for headings, the active tab and links; running text is
+`purple-dark`; secondary text is `purple-muted`. One border language: 1px `manila-deep`
+lines, no drop shadows, no coloured top bars on cards.
 
 ## Fonts (`fonts/`)
 Latin-subset WOFF2 files from Fontsource (jsDelivr, pinned versions), each family with
@@ -82,10 +122,14 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 licence is Adobe's origina
 (`adobe-fonts/source-serif`), since Fontsource's copy lacks the copyright line.
 
 ## Local preview
-- `python3 -m http.server 8000 --bind 127.0.0.1` from the repo root, then open
-  `http://127.0.0.1:8000/template.html`. The container image ships only
-  `python3-minimal`, which lacks `http.server`; install the `python3` package
-  (`sudo apt-get install -y python3`) until the dev container provides it.
+- `bundle exec jekyll serve --host 127.0.0.1 --port 4000`, then open
+  `http://127.0.0.1:4000/about/`. It rebuilds on save (not on `_config.yml` changes).
+  The `Gemfile` pins the `github-pages` gem; gems install into `vendor/bundle`
+  (`bundle config set --local path vendor/bundle`, then `bundle install`).
+- The container image has neither Ruby nor the full Python standard library. Until the
+  dev container provides them: `sudo apt-get install -y ruby-full build-essential
+  zlib1g-dev python3`, then `gem install --user-install bundler` and add
+  `$(ruby -e 'print Gem.user_dir')/bin` to `PATH`.
 - Headless checks use Playwright with Chromium (installed outside the repo so far).
   Render at desktop (1280 px) and mobile (390 px) widths and check for failed
   requests, unloaded fonts and horizontal page scroll.
@@ -101,4 +145,5 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 licence is Adobe's origina
   are git-ignored. Do not commit them.
 
 ## Open questions
-- Pages, content and navigation for the site are not yet defined.
+- Work, Writing and Contact pages: not yet written, so no tabs.
+- Whether `/` stays the "Coming soon" page or becomes the About page at launch.

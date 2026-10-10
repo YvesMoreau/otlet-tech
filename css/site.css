@@ -94,6 +94,9 @@
   --page-width: 64rem;
   --gutter: clamp(1rem, 4vw, 2rem);
   --rule: 1px solid var(--manila-deep);
+
+  /* Secondary text: purple-dark mixed 72% with white. Labels, inactive tabs, footer. */
+  --purple-muted: #715785;
 }
 
 /* ---------- Base ---------- */
@@ -120,16 +123,17 @@ a:hover { color: var(--purple-mid); }
   outline-offset: 2px;
 }
 
+/* Purple is reserved for headings, the active tab and links; text is purple-dark. */
 h1, h2, h3 {
   font-family: var(--font-heading);
   font-weight: 600;
   color: var(--purple);
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0 0 0.5em;
 }
-h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
-h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); margin-top: 1.5em; }
-h3 { font-size: 1.2rem; }
+h1 { font-size: clamp(2rem, 4.5vw, 2.9rem); letter-spacing: -0.02em; margin-bottom: 0.4em; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.75rem); letter-spacing: -0.01em; margin-top: 2.5rem; }
+h3 { font-size: 1.2rem; color: var(--purple-dark); }
 
 p { margin: 0 0 1em; }
 
@@ -160,18 +164,18 @@ p { margin: 0 0 1em; }
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.75rem 2rem;
-  padding-block: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+  padding-block: clamp(1.25rem, 4vw, 2.25rem) clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .wordmark {
   display: block;
-  width: clamp(12rem, 45vw, 22rem);
+  width: clamp(11rem, 36vw, 17rem);
 }
 
 .tagline {
   margin: 0;
   color: var(--purple);
-  font-size: clamp(1.15rem, 2.8vw, 1.75rem);
+  font-size: clamp(1rem, 2vw, 1.3rem);
   line-height: 1.2;
   text-align: right;
   margin-left: auto;          /* stay right-aligned when wrapped below the wordmark */
@@ -209,15 +213,17 @@ p { margin: 0 0 1em; }
   --tab-edge: var(--manila-deep);
   --tab-top-colour: var(--manila-deep);
   --tab-top-w: 1px;
+  --tab-line: 1px;            /* width of the slanted sides */
   --tab-run: calc(var(--tab-h) * 0.26795);
-  --tab-side: 1.0353px;       /* 1px line measured horizontally: 1 / cos 15° */
+  --tab-side: calc(var(--tab-line) * 1.0353);   /* side width measured horizontally: 1 / cos 15° */
   display: block;
   position: relative;
   isolation: isolate;
   height: var(--tab-h);
   padding: 0.5rem 1.75rem 0;  /* extra inline room for the slanted sides */
   margin-bottom: 1px;         /* leave the card's top edge visible under inactive tabs */
-  color: var(--purple);
+  color: var(--purple-muted);
+  font-size: 0.975rem;
   font-weight: 500;
   line-height: 1.5rem;
   text-decoration: none;
@@ -249,18 +255,29 @@ p { margin: 0 0 1em; }
   );
 }
 
+/* Hover: colour only, so it never looks like the active tab */
 .tabs a:hover {
-  --tab-h: 2.7rem;            /* the tab lifts slightly */
-  --tab-fill: var(--manila-light);
-  color: var(--purple);
+  --tab-fill: #F6ECCA;        /* halfway between manila and manila-light */
+  color: var(--purple-dark);
+}
+
+/* Keyboard focus: thicken the trapezoid's own outline. A rectangular outline
+   would be clipped by the scrolling tab row. */
+.tabs a:focus-visible {
+  outline: none;
+  --tab-edge: var(--purple-mid);
+  --tab-top-colour: var(--purple-mid);
+  --tab-line: 2px;
+  --tab-top-w: 3px;
+  color: var(--purple-dark);
 }
 
 /* Index number on each divider, set like a catalogue-card entry */
 .tab-index {
-  margin-right: 0.5rem;
+  margin-right: 0.45rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--purple-mid);
+  font-weight: 400;
 }
 
 /* Active tab: joined to the card below */
@@ -271,6 +288,11 @@ p { margin: 0 0 1em; }
   --tab-top-w: 3px;
   padding-top: 0.8rem;
   margin-bottom: 0;           /* covers the card's top edge */
+  color: var(--purple);
+}
+.tabs a[aria-current="page"]:focus-visible {
+  --tab-edge: var(--purple-mid);
+  --tab-line: 2px;
 }
 
 /* ---------- Card: the page body ---------- */
@@ -279,79 +301,206 @@ p { margin: 0 0 1em; }
   background: var(--white);
   border: var(--rule);
   border-top: 0;              /* drawn by .tabs ul */
-  border-radius: 0 0 0.5rem 0.5rem;
-  padding: clamp(1.25rem, 4vw, 3rem);
-  box-shadow: 0 1px 0 var(--manila-deep), 0 8px 24px -16px rgba(58, 21, 86, 0.35);
+  border-radius: 0 0 0.375rem 0.375rem;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
 }
 
 .card > :last-child { margin-bottom: 0; }
 
 .lead {
-  font-size: 1.2rem;
-  color: var(--purple);
-  max-width: 40em;
+  font-size: clamp(1.15rem, 2vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--purple-dark);
+  max-width: 36em;
+  margin-bottom: 1.5rem;
 }
 
-.prose { max-width: 40em; }
+/* The measure applies to paragraphs, so a floated figure can reach the column edge */
+.prose > p { max-width: 38em; }
+
+/* Long-form pages (front matter `body_class: long-form`): running text in Source Serif 4.
+   Slightly larger than the sans body, since the serif sets smaller at the same size. */
+.long-form .prose > p {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+.long-form .prose strong { font-weight: 600; }
+
+/* ---------- Records: catalogue data in a margin column ----------
+   Each section of a page is a record. On wide screens its classification
+   (number, heading, date) sits in a left column, as in the corner of a
+   catalogue card; on narrow screens it becomes one line above the content. */
+.record {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 0.75rem;
+}
+.record + .record {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: var(--rule);
+}
+.record-body > :first-child { margin-top: 0; }
+.record-body > :last-child { margin-bottom: 0; }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--purple-muted);
+}
+.meta > * + *::before {
+  content: "·";
+  margin-right: 0.5rem;
+}
+.meta-class { color: var(--purple-dark); }
+
+@media (min-width: 52rem) {
+  .record {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .meta {
+    flex-direction: column;
+    align-self: start;
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--purple);
+  }
+  .meta > * + *::before { content: none; }
+  .meta-class {
+    margin: 0.4rem 0 0.2rem;
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+}
+
+/* Text still to be written; must not survive into a published page */
+.placeholder {
+  background: var(--mist);
+  outline: 1px dashed var(--purple-mid);
+  color: var(--purple-muted);
+}
+
+/* ---------- Figures ---------- */
+/* Comic-strip panel: a heavy ink line round the image, a manila-light mat, and a
+   hairline at the mat's edge (manila-light and white differ by only 1.09:1). The mat
+   is drawn outside the image with outline and box-shadow; the figure's padding keeps
+   it inside the text column. */
+.figure {
+  --panel-ink: 3px;
+  --panel-mat: clamp(6px, 1.2vw, 10px);
+  margin: 2rem 0;
+  padding: calc(var(--panel-mat) + 1px);
+}
+.figure img {
+  width: 100%;
+  border: var(--panel-ink) solid var(--purple-dark);
+  outline: var(--panel-mat) solid var(--manila-light);
+  box-shadow: 0 0 0 calc(var(--panel-mat) + 1px) var(--manila-deep);
+}
+/* Half-width figures with text wrapped round them (square wrap). Place the figure
+   at the start of its .prose block; `figure-right` or `figure-left` sets the side.
+   Below 40rem the figure returns to full width. */
+@media (min-width: 40rem) {
+  .figure-right,
+  .figure-left {
+    width: 60%;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+  }
+  .figure-right { float: right; margin-left: 1.75rem; margin-right: 0; }
+  .figure-left { float: left; margin-right: 1.75rem; margin-left: 0; }
+}
+.prose,
+.record-body { display: flow-root; }   /* contain floated figures */
+
+.figure figcaption {
+  margin-top: calc(var(--panel-mat) + 0.75rem);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--purple-muted);
+}
+.fig-no {
+  margin-right: 0.5rem;
+  color: var(--purple-dark);
+}
 
 /* ---------- Index-card label (metadata) ---------- */
 .label {
   display: block;
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.75rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 0.02em;
-  color: var(--purple);
+  color: var(--purple-muted);
 }
 
-/* ---------- Quotation ---------- */
+/* ---------- Quotation (pull quote) ---------- */
 blockquote {
-  margin: 2rem 0;
-  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin: 2.5rem 0;
+  padding: 0.1rem 0 0.1rem 1.5rem;
   border-left: 3px solid var(--lavender);
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: clamp(1.3rem, 2.6vw, 1.6rem);
   font-style: italic;
+  line-height: 1.4;
   color: var(--purple-dark);
-  max-width: 36em;
+  max-width: 30em;
 }
+blockquote p { margin-bottom: 0.6rem; }
 blockquote footer {
-  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-style: normal;
-  color: var(--purple);
+  line-height: 1.6;
+  color: var(--purple-muted);
 }
 
 /* ---------- Entry cards (lists of articles, projects, people) ---------- */
 .entries {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
   gap: 1rem;
   margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
+/* Each entry is a catalogue card: the classification line sits above a single
+   ruled line, as on the cards of Otlet's Répertoire. */
 .entry {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1rem 1.25rem 1.25rem;
+  padding: 0.9rem 1.25rem 1.25rem;
   background: var(--manila-light);
   border: var(--rule);
-  border-top: 3px solid var(--purple);
-  border-radius: 0.25rem;
+  border-radius: 2px;
 }
-.entry h3 { margin-bottom: 0.4rem; }
-.entry h3 a { text-decoration: none; }
-.entry h3 a:hover { text-decoration: underline; }
+.label time { white-space: nowrap; }   /* never break a date at its hyphen */
+.entry .label {
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--purple);
+}
+.entry h3 { margin-bottom: 0.35rem; }
+.entry h3 a { color: inherit; text-decoration: none; }
+.entry h3 a:hover { color: var(--purple); text-decoration: underline; }
 .entry p { margin: 0; font-size: 0.95rem; }
 
 /* ---------- Footer ---------- */
 .site-footer {
-  padding-block: 2rem 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-block: 1.5rem 3rem;
   font-size: 0.875rem;
-  color: var(--purple);
 }
 .site-footer .label { margin: 0; }

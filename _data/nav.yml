@@ -1,0 +1,7 @@
+# Divider tabs, in order. Add a tab only when its page has content.
+- index: "01"
+  title: About
+  url: /about/
+- index: "02"
+  title: Lineage
+  url: /lineage/

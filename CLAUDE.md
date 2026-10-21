@@ -12,46 +12,33 @@ Built with Jekyll (3.10.0, the version GitHub Pages runs), which GitHub Pages bu
 push. `index.html` has no front matter, so Jekyll copies it unchanged: it is still the live
 "Coming soon" page.
 
-## Colour palette
-The three brand colours are purple, lavender and white. The rest extend them.
-Contrast ratios are WCAG 2.x.
+## House style
+@/mnt/otlet-shared/HOUSE-STYLE.md
 
-| Family | CSS variable | Hex | Role |
-|---|---|---|---|
-| Purple | `--purple-dark` | `#3A1556` | Long-form body text, footers, dark sections |
-| | `--purple` | `#612387` | Brand colour: logo, headings, links, buttons |
-| | `--purple-mid` | `#8040B0` | Hover and focus states, secondary accents (large text only) |
-| | `--purple-muted` | `#715785` | Secondary text: labels, inactive tabs, footer, attributions (purple-dark mixed 72% with white). On white 6.17, manila-light 5.65, manila 4.78 |
-| Lavender | `--lavender` | `#CFBDF5` | Brand accent surfaces, tags, borders. Not for text on light backgrounds |
-| | `--mist` | `#F1EBFC` | Panels and cards on lavender or white pages |
-| Manila | `--manila-deep` | `#D9C48A` | Rules, borders, dividers. Decoration only, not for text |
-| | `--manila` | `#F2E2B0` | Accent surfaces: cards, badges, callouts |
-| | `--manila-light` | `#FAF5E3` | Default page background (manila mixed 65% with white) |
-| Neutral | `--white` | `#FFFFFF` | Text on dark purple, inputs, white panels |
+The line above loads the OTLET house style (identity, voice and spelling, color,
+typography, the index-card concept, logo and imagery) from
+`/mnt/otlet-shared/HOUSE-STYLE.md`, mounted read-only from the Mac
+(`~/CodeProjects/OTLET-SHARED`, a git repository there).
 
-Manila refers to the catalogue cards of Otlet's Répertoire (see the concept below).
+- Brand rules come from the house style. This file covers how the site implements
+  them (CSS tokens, Jekyll structure, assets). If the two conflict, ask the user; do
+  not choose.
+- The house style cannot be edited from the container. To propose a change: copy it
+  to `HOUSE-STYLE.proposed.md` in the project root, edit the copy, run
+  `diff -u /mnt/otlet-shared/HOUSE-STYLE.md HOUSE-STYLE.proposed.md > house-style.patch`,
+  and tell the user. The user reviews and applies the patch on the Mac. Delete both
+  files once it is applied or rejected. Both are git-ignored and excluded from the site.
+- If `/mnt/otlet-shared` is missing, the container was built before the mount was
+  added: ask the user to rebuild. Do not work from an old copy.
 
-Text on the default background (`--manila-light`): `purple-dark` 13.53, `purple` 9.17,
-`purple-mid` 5.87. Text on `--purple-dark`: white 14.77, `manila-light` 13.53,
-`lavender` 8.62. `mist` and `manila-light` are nearly the same lightness (1.07:1), as are
-`white` and `manila-light` (1.09:1), so separate them with a border, not by colour alone. There is no black or grey: `purple-dark` is the near-black.
-
-## Typography
-| Role | Font | Rationale |
-|---|---|---|
-| Wordmark | Jost Heavy | Taken from `assets/Otlet_lateral.png`. 1920s geometric (Futura-style) lineage, contemporary with Otlet's Mundaneum. |
-| Tag line | Fira Sans | Taken from `assets/Otlet_lateral.png`. "Own The Limits" in Bold, "Ethics in Tech" in Italic. |
-| Headings | Jost | Continuity with the wordmark. |
-| Body text and interface | Fira Sans | Continuity with the tagline. Designed for screens, full weight range, legible at small sizes. |
-| Metadata, labels, code | Fira Code (or Fira Mono) | Bridge between the two dimensions: evokes the typewritten index card of Otlet's Répertoire and modern code. Same Fira family, so no new design language. OFL licence. |
-| Long-form and quotations | Source Serif 4 | Gives essays and quotations a historical, bookish register. Calm and highly readable. OFL licence. |
-
-## Concept: the index card as an interface pattern
-The monospace carries the historical reference structurally, not decoratively.
-Set dates, tags, authors and section numbers like catalogue-card entries, e.g. a
-classification-style label such as `004.8 · Ethics · 2026-10` above an article
-title. This ties Otlet's classification work to present-day metadata and tagging.
-Do not use ornamental "vintage" fonts.
+## Implementation of the house style
+- Colors: each house-style color is a CSS variable of the same name in `:root` of
+  `css/site.css` (`--purple-dark`, `--purple`, `--purple-mid`, `--purple-muted`,
+  `--lavender`, `--mist`, `--manila-deep`, `--manila`, `--manila-light`, `--white`).
+  Use the variables, never hex values, except the tab hover fill `#F6ECCA` (halfway
+  between manila and manila-light).
+- Fonts: the variables `--font-heading` (Jost), `--font-body` (Fira Sans),
+  `--font-mono` (Fira Code) and `--font-serif` (Source Serif 4); files under `fonts/`.
 
 ## Assets (`assets/`)
 | File | Notes |
@@ -63,8 +50,8 @@ Do not use ornamental "vintage" fonts.
 | `Otlet_wordmark_plain.png`, `Otlet_wordmark_fancy.png` | Wordmark variants. |
 | `Otlet_wordmark_fancy.webp`, `Otlet_wordmark_fancy_1200.png` | Fancy wordmark trimmed to its content, 1200×276, transparent. Site header (WebP with PNG fallback), with the tagline set as live text to its right. |
 | `Otlet_lateral.webp`, `Otlet_lateral_1400.png` | Trimmed lateral logo, 1400×529. Tried as the header, not used; untracked. |
-| `Otlet_emblem.png` | Emblem, full colour. |
-| `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-colour emblems. The white one is for dark or purple backgrounds. |
+| `Otlet_emblem.png` | Emblem, full color. |
+| `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-color emblems. The white one is for dark or purple backgrounds. |
 | `Otlet_favicon.svg` | Favicon source (purple ring). The cleaned, square-viewBox copy served by the site is `favicon.svg` in the repo root, with `favicon.ico` (16/32/48) and `site.webmanifest`. |
 
 ## Site structure (Jekyll)
@@ -91,7 +78,7 @@ Components: divider tabs (`nav.tabs`, active tab marked with `aria-current="page
 joined to the card below; each tab is an isosceles trapezoid with 75° base angles, drawn
 with `clip-path` from an explicit `--tab-h`, so change heights through that variable).
 `main.card` holds `.record` sections separated by 1px rules. From 52rem wide, each
-record's catalogue data (`.meta`: classification number, heading, date) sits in a left
+record's catalog data (`.meta`: classification number, heading, date) sits in a left
 margin column under a purple rule; below that width it is one line above the content.
 Figures (`.figure`) are framed like comic-strip panels (3px `purple-dark` ink line, a
 `manila-light` mat, a `manila-deep` hairline at its edge). The Lineage figures have no
@@ -99,7 +86,7 @@ caption; the `figcaption` style (Fira Code, `Fig. n`) remains for later use. In 
 `figure-right` or `figure-left`: from 40rem wide it floats at 60% of the column width and
 the text wraps round it; narrower, it is full width. The 38em measure is set on
 `.prose > p`, not on `.prose`, so floated figures align with the column edge. Entry cards
-(`.entries`/`.entry`) are catalogue cards. Text still to be written is marked
+(`.entries`/`.entry`) are catalog cards. Text still to be written is marked
 `.placeholder` (dashed outline); none may remain at publication.
 
 The historical facts on both pages were drafted from model knowledge, not checked
@@ -108,17 +95,17 @@ before publishing.
 
 Page images are in `assets/images/` (WebP from the less saturated
 `Otlet_transformed_photograph/image1_612387.jpg` and `image6_612387.jpg`). They are
-git-ignored: confirm the rights to the source images, then whitelist them in
-`.gitignore`, before a page that uses them is published.
+git-ignored until publication. The original photographs are public domain (user,
+2026-10-21). Before a page that uses them is published: record who made the purple
+engraving-style transformations and the source of each original photograph, then
+whitelist the images in `.gitignore`.
 
-Visual rules: purple is reserved for headings, the active tab and links; running text is
-`purple-dark`; secondary text is `purple-muted`. One border language: 1px `manila-deep`
-lines, no drop shadows, no coloured top bars on cards.
+Visual rules (color use, line style, contrast): see the house style.
 
 ## Fonts (`fonts/`)
 Latin-subset WOFF2 files from Fontsource (jsDelivr, pinned versions), each family with
-its OFL licence text: Fira Sans 400/400 italic/500/500 italic/700, Jost 600, Fira Code 400,
-Source Serif 4 400/400 italic/600. The Source Serif 4 licence is Adobe's original
+its OFL license text: Fira Sans 400/400 italic/500/500 italic/700, Jost 600, Fira Code 400,
+Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's original
 (`adobe-fonts/source-serif`), since Fontsource's copy lacks the copyright line.
 
 ## Local preview
@@ -130,14 +117,30 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 licence is Adobe's origina
   dev container provides them: `sudo apt-get install -y ruby-full build-essential
   zlib1g-dev python3`, then `gem install --user-install bundler` and add
   `$(ruby -e 'print Gem.user_dir')/bin` to `PATH`.
-- Headless checks use Playwright with Chromium (installed outside the repo so far).
-  Render at desktop (1280 px) and mobile (390 px) widths and check for failed
-  requests, unloaded fonts and horizontal page scroll.
+- `vendor/bundle` lives in the project folder, so installed gems survive a container
+  rebuild; Ruby itself does not.
+- Headless checks use Playwright with Chromium. It is not part of the project or the
+  image: install it in the session scratchpad (`npm install playwright`, then
+  `npx playwright install --with-deps chromium`) when needed. Render at desktop
+  (1280 px) and mobile (390 px) widths and check for failed requests, unloaded fonts
+  and horizontal page scroll.
+
+## Environment and publishing
+- Dev container. Read-only inside it: `.devcontainer/`, `.vscode/` and
+  `claude-devcontainer.sh` (they run on the Mac; edit them there), the managed
+  settings, and `/mnt/otlet-shared`. Anything installed with `apt` or `gem` is lost
+  when the container is rebuilt.
+- GitHub: `gh` holds a fine-grained token, and git uses it for github.com through
+  gh's credential helper. The token can push to `YvesMoreau/otlet-tech`. Claude
+  sessions are denied `gh` commands by the managed settings; there is no rule against
+  `git push`.
+- Push only when the user asks. A push to `main` deploys to otlet.tech within about a
+  minute. Before pushing, check that no git-ignored draft (pages, images, notes) has
+  been staged.
 
 ## Conventions
 - Self-host the fonts (OFL permits it) rather than loading from a third-party CDN.
-- Keep text/background pairs accessible (WCAG AA contrast). Purple on white passes;
-  check lavender before using it for text.
+- Contrast: WCAG AA for every text/background pair (ratios in the house style).
 - `.gitignore` tracks only the assets the page uses (a whitelist under `assets/*`). When
   the page starts using another asset, add a `!assets/<file>` line, or it will not be
   committed or published. Unused source files stay on disk, untracked.

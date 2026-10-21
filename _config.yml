@@ -6,6 +6,9 @@ baseurl: ""
 # Files that must not be copied into the built site
 exclude:
   - CLAUDE.md
+  - HOUSE-STYLE.md
+  - HOUSE-STYLE.proposed.md
+  - house-style.patch
   - Gemfile
   - Gemfile.lock
   - claude-devcontainer.sh

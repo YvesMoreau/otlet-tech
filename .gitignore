@@ -26,3 +26,7 @@ vendor/
 
 # Local working notes, not for publication
 HARDENING-PLAN.md
+
+# House-style change proposals (see CLAUDE.md)
+HOUSE-STYLE.proposed.md
+house-style.patch

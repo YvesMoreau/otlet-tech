@@ -35,10 +35,10 @@ typography, the index-card concept, logo and imagery) from
 - Colors: each house-style color is a CSS variable of the same name in `:root` of
   `css/site.css` (`--purple-dark`, `--purple`, `--purple-mid`, `--purple-muted`,
   `--lavender`, `--mist`, `--manila-deep`, `--manila`, `--manila-light`, `--white`).
-  Use the variables, never hex values, except the tab hover fill `#F6ECCA` (halfway
-  between manila and manila-light).
-- Fonts: the variables `--font-heading` (Jost), `--font-body` (Fira Sans),
-  `--font-mono` (Fira Code) and `--font-serif` (Source Serif 4); files under `fonts/`.
+  Use the variables, never hex values.
+- Fonts: the variables `--font-head` (Jost), `--font-body` (Fira Sans),
+  `--font-code` (Fira Code) and `--font-serif` (Source Serif 4), as named in template B;
+  self-hosted from `fonts/`. The template loaded them from Google Fonts; that was replaced.
 
 ## Assets (`assets/`)
 | File | Notes |
@@ -48,48 +48,70 @@ typography, the index-card concept, logo and imagery) from
 | `Otlet_stacked.webp` | 1000 px wide WebP of the stacked logo, used on the page with the PNG as fallback. |
 | `icons/` | `icon-192.png`, `icon-512.png` (transparent, for the manifest) and `apple-touch-icon.png` (180 px, on manila-light). |
 | `Otlet_wordmark_plain.png`, `Otlet_wordmark_fancy.png` | Wordmark variants. |
-| `Otlet_wordmark_fancy.webp`, `Otlet_wordmark_fancy_1200.png` | Fancy wordmark trimmed to its content, 1200×276, transparent. Site header (WebP with PNG fallback), with the tagline set as live text to its right. |
+| `Otlet_wordmark_fancy.webp`, `Otlet_wordmark_fancy_1200.png` | Fancy wordmark trimmed to its content, 1200×276, transparent. Header of template A; unused and untracked since 2026-10-28. |
+| `otlet-wordmark.webp` (417×96), `otlet-emblem.webp` (560×560), `og-image.jpg` (1200×630) | From template B: top-bar wordmark, Home hero emblem, social-sharing image. |
 | `Otlet_lateral.webp`, `Otlet_lateral_1400.png` | Trimmed lateral logo, 1400×529. Tried as the header, not used; untracked. |
 | `Otlet_emblem.png` | Emblem, full color. |
 | `otlet_emblem_1c_purple.png`, `otlet_emblem_1c_black.png`, `otlet_emblem_reversed_white.png` | One-color emblems. The white one is for dark or purple backgrounds. |
 | `Otlet_favicon.svg` | Favicon source (purple ring). The cleaned, square-viewBox copy served by the site is `favicon.svg` in the repo root, with `favicon.ico` (16/32/48) and `site.webmanifest`. |
 
-## Site structure (Jekyll)
+## Site structure (Jekyll): template B, "the bounded disk"
+Adopted 2026-10-26 from `misc/otlet-site-b.zip` (a static five-page template). Pages are
+stacked full-width color bands; small rings, taken from the emblem's edge, mark the
+current menu item and timeline points.
+
 | Path | Role |
 |---|---|
 | `_config.yml` | Site title, description, URL; `exclude` keeps `CLAUDE.md`, `Gemfile` etc. out of the build |
-| `_layouts/default.html` | Shared page: head, header, tabs, `main.card`, footer. Pages set `layout: default` |
-| `_includes/site-header.html`, `tabs.html`, `site-footer.html` | Header (wordmark + live tagline), divider tabs, footer |
-| `_data/nav.yml` | The tabs, in order. The active tab is the one whose `url` equals `page.url`. Add a tab only when its page has content |
-| `about.html` (`/about/`) | 001 About, 002 Principles (entry cards), 003 Our name (teaser linking to Lineage) |
-| `lineage.html` (`/lineage/`) | 001 A century-old question (Otlet, Henri and Léonie La Fontaine, Fig. 1), 002 Why it matters now (Fig. 2) |
-| `css/site.css` | Tokens, `@font-face` rules and all components |
+| `_layouts/default.html` | Head (meta, Open Graph, JSON-LD), top bar, `<main id="main">`, footer. Pages set `layout: default` and supply the bands |
+| `_includes/site-header.html` | Top bar: wordmark, live tagline, menu from `_data/nav.yml` (current item: `aria-current="page"`); tabs or ring menu per `_data/options.yml` |
+| `_includes/site-footer.html` | Dark footer: name, tagline, page links from `_data/nav.yml`, credit line |
+| `_data/nav.yml` | Menu and footer links, in order: Home, About, Advocacy, Education, Lineage, Contact |
+| `home.html` (`/home/`) | Home: hero with emblem, three-point dark band, Advocacy rows, quotation, call to action. Lorem ipsum |
+| `about.html` (`/about/`) | Banner, principles (dark band), article with contents rail (What we do, Our name), call to action |
+| `lineage.html` (`/lineage/`) | Banner, article: the three founders (ring portraits), the Répertoire (Fig. 1), timeline, why it matters now (Fig. 2) |
+| `advocacy.html` (`/advocacy/`) | Banner, index rows (`301`…), three-point dark band, call to action. Lorem ipsum. Formerly Programs (`/programs/`) |
+| `education.html` (`/education/`) | Banner, index rows (`401`…), call to action. Lorem ipsum |
+| `contact.html` (`/contact/`) | Lorem ipsum. The contact form is not connected to any mail service; a short inline script says so on submit |
+| `css/site.css` | Template B stylesheet with the project's `@font-face` rules prepended, plus `.placeholder` and `.plate` |
 
-Page front matter: `title`, `permalink`, optional `description`, and `noindex: true` while
-the page is a draft. `body_class: long-form` sets the page's running text (`.prose > p`) in
-Source Serif 4 at 1.125rem; Lineage uses it, About stays in Fira Sans. Use `relative_url` for every internal link and asset path, since
-pages live in subfolders.
+`index.html` stays the live "Coming soon" page, so Home lives at `/home/` for now. At
+launch: move the home page to `/` (replace `index.html`), point the wordmark link and the
+Home menu item at `/`, and add `robots.txt` and a sitemap (the template's versions list
+`.html` URLs, not these permalinks).
 
-`about.html` and `lineage.html` are git-ignored, so they are not published. To publish a
-page: remove its line from `.gitignore`, drop `noindex`, clear its `.placeholder` text, and
-whitelist the images it uses.
+Page front matter: `title` (omit on Home), `permalink`, optional `description`, and
+`noindex: true` while the page is a draft. Use `relative_url` for every internal link and
+asset path.
 
-Components: divider tabs (`nav.tabs`, active tab marked with `aria-current="page"` and
-joined to the card below; each tab is an isosceles trapezoid with 75° base angles, drawn
-with `clip-path` from an explicit `--tab-h`, so change heights through that variable).
-`main.card` holds `.record` sections separated by 1px rules. From 52rem wide, each
-record's catalog data (`.meta`: classification number, heading, date) sits in a left
-margin column under a purple rule; below that width it is one line above the content.
-Figures (`.figure`) are framed like comic-strip panels (3px `purple-dark` ink line, a
-`manila-light` mat, a `manila-deep` hairline at its edge). The Lineage figures have no
-caption; the `figcaption` style (Fira Code, `Fig. n`) remains for later use. In running text, put the figure first inside its `.prose` block with
-`figure-right` or `figure-left`: from 40rem wide it floats at 60% of the column width and
-the text wraps round it; narrower, it is full width. The 38em measure is set on
-`.prose > p`, not on `.prose`, so floated figures align with the column edge. Entry cards
-(`.entries`/`.entry`) are catalog cards. Text still to be written is marked
-`.placeholder` (dashed outline); none may remain at publication.
+All six pages are git-ignored, so they are not published. To publish a page: remove its
+line from `.gitignore`, drop `noindex`, clear its `.placeholder` text, and whitelist the
+assets it uses (`otlet-wordmark.webp`, `otlet-emblem.webp`, `og-image.jpg` are used by the
+layout or Home and are not yet whitelisted).
 
-The historical facts on both pages were drafted from model knowledge, not checked
+Components (class names from the template): `.band` with `.band-light` (manila-light),
+`.band-white`, `.band-dark` (purple-dark), `.band-lavender`; `.banner` (page title with
+breadcrumb `.crumbs`); `.hero`; `.limits`/`.limit` (three numbered points); `.rows` (index
+rows with a catalog label and an arrow); `.quote`; `.cta`; `.article` with a sticky `.toc`
+and `.content` sections; `.prose` (Source Serif 4, 38em measure); `.people`/`.person`
+(ring portraits); `.timeline`; `.facts` (definition list); `.tile`; `.btn-primary`/`.btn-ghost`;
+`.label` (Fira Code catalog label). Additions: `.plate` frames an illustration as a
+comic-strip panel (house style, section 5); `.placeholder` marks text still to be written
+(dashed outline); none may remain at publication.
+
+Menu: `_data/options.yml` sets `menu: tabs`, which draws the menu as divider tabs
+(`_includes/nav-tabs.html`, `css/tabs.css`, loaded only in that case): right-aligned
+beside the logo on the top bar's bottom rule, unnumbered, overlapping, with rounded
+tops and flared bottoms. `clip-path: shape()` draws the curves; browsers without it get
+sharp trapezoids. Any other value restores the template B top-bar menu with ring markers
+(`.menu` in `css/site.css`), kept as the alternative.
+
+The house style does not yet describe this version (tabs as above, and template B's
+bands, pill buttons, rounded tiles and dark footer). `house-style.patch` (2026-10-28)
+proposes it, as a new section 4.1; until the user applies or rejects it, treat these
+points as settled for the site but not as house style.
+
+The historical facts on About and Lineage were drafted from model knowledge, not checked
 sources; verify them (Mundaneum archives; Rayward, *The Universe of Information*, 1975)
 before publishing.
 
@@ -100,8 +122,6 @@ git-ignored until publication. The original photographs are public domain (user,
 engraving-style transformations and the source of each original photograph, then
 whitelist the images in `.gitignore`.
 
-Visual rules (color use, line style, contrast): see the house style.
-
 ## Fonts (`fonts/`)
 Latin-subset WOFF2 files from Fontsource (jsDelivr, pinned versions), each family with
 its OFL license text: Fira Sans 400/400 italic/500/500 italic/700, Jost 600, Fira Code 400,
@@ -110,7 +130,7 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
 
 ## Local preview
 - `bundle exec jekyll serve --host 127.0.0.1 --port 4000`, then open
-  `http://127.0.0.1:4000/about/`. It rebuilds on save (not on `_config.yml` changes).
+  `http://127.0.0.1:4000/home/`. It rebuilds on save (not on `_config.yml` changes).
   The `Gemfile` pins the `github-pages` gem; gems install into `vendor/bundle`
   (`bundle config set --local path vendor/bundle`, then `bundle install`).
 - The container image has neither Ruby nor the full Python standard library. Until the
@@ -148,5 +168,6 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
   are git-ignored. Do not commit them.
 
 ## Open questions
-- Work, Writing and Contact pages: not yet written, so no tabs.
+- Home, Advocacy, Education, and Contact: Lorem ipsum only.
+- `house-style.patch`: the web-page rules (section 4.1), tabs, and illustration rights, for the user to apply on the Mac.
 - Whether `/` stays the "Coming soon" page or becomes the About page at launch.

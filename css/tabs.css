@@ -1,0 +1,169 @@
+/* Divider tabs for the main menu. Loaded only when _data/options.yml sets
+   menu: tabs (the default). Adapted from the template A tabs: each tab is an isosceles trapezoid
+   with 75° base angles, standing on the top bar's bottom line, right of the logo.
+   The active tab is joined to the first band of the page, which is manila-light on
+   every page, so its fill is manila-light. */
+
+/* The top bar's bottom line is drawn as a background, so the active tab can cover
+   it; the tabs sit on that line, the logo just above it. */
+.topbar {
+  border-bottom: 0;
+  background: linear-gradient(var(--manila-deep), var(--manila-deep)) bottom / 100% 1px no-repeat var(--white);
+}
+.topbar .wrap { align-items: flex-end; padding-block: 0.9rem 0; }
+.topbar .logo { margin-bottom: 0.75rem; }
+
+.tabs {
+  --tab-hover: #F6ECCA;       /* halfway between manila and manila-light */
+  min-width: 0;
+  max-width: 100%;
+  margin-left: auto;          /* stay right-aligned, also when wrapped below the logo */
+}
+.tabs ul {
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;           /* scroll the tab row, not the page, on narrow screens */
+  scrollbar-width: none;
+}
+.tabs li { flex: 0 0 auto; }
+
+/* Overlap: each tab moves left by the run of an unselected tab's side, so the
+   slanted sides of neighbors cross at mid-height. Later tabs are painted in front
+   (dividers seen from the front of a drawer); the selected tab, then a hovered or
+   focused one, comes forward. */
+.tabs li + li { margin-left: calc(-2.5rem * 0.26795); }
+.tabs a:hover,
+.tabs a:focus-visible { z-index: 1; }
+.tabs a[aria-current="page"] { z-index: 2; }
+
+/* The link itself is clipped to the trapezoid, so overlapping tabs only take
+   clicks inside their visible shape. ::before is the outline (top strip in
+   --tab-top-color, sides in --tab-edge), ::after the fill, inset by the line
+   widths. Each side rises 15° from vertical, so it runs inward by
+   height × tan 15° (0.26795). */
+.tabs a {
+  --tab-h: 2.5rem;
+  --tab-fill: var(--white);
+  --tab-edge: var(--manila-deep);
+  --tab-top-color: var(--manila-deep);
+  --tab-top-w: 1px;
+  --tab-line: 1px;
+  --tab-run: calc(var(--tab-h) * 0.26795);
+  --tab-side: calc(var(--tab-line) * 1.0353);   /* 1 / cos 15° */
+  display: block;
+  position: relative;
+  isolation: isolate;
+  height: var(--tab-h);
+  padding: 0.5rem 1.6rem 0;
+  margin-bottom: 1px;         /* leave the baseline visible under inactive tabs */
+  color: var(--purple);
+  font-size: 0.975rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: polygon(0 100%, var(--tab-run) 0, calc(100% - var(--tab-run)) 0, 100% 100%);
+}
+.tabs a::before,
+.tabs a::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.tabs a::before {
+  top: 0;
+  background: linear-gradient(var(--tab-top-color) 0 var(--tab-top-w), var(--tab-edge) 0);
+}
+.tabs a::after {
+  top: var(--tab-top-w);
+  background: var(--tab-fill);
+  clip-path: polygon(
+    var(--tab-side) 100%,
+    calc(var(--tab-run) - var(--tab-top-w) * 0.26795 + var(--tab-side)) 0,
+    calc(100% - var(--tab-run) + var(--tab-top-w) * 0.26795 - var(--tab-side)) 0,
+    calc(100% - var(--tab-side)) 100%
+  );
+}
+
+/* Rounded corners, where clip-path: shape() is supported (otherwise the sharp
+   polygon above). At the top, each corner joins a 75° side to the top edge
+   (interior angle 105°); at the bottom, the side flares out into the baseline
+   (outside angle also 105°). Either arc meets each edge at r / tan 52.5° (0.7673 r)
+   from the vertex; along the side that is 0.2588 across and 0.9659 up or down
+   (sin and cos 15°). --vx: x of the bottom-left vertex; --tl: x of the top-left
+   vertex; --r, --rb: top and bottom radii. */
+@supports (clip-path: shape(from 0 0, line to 1px 1px)) {
+  .tabs a { --tab-r: 6px; }
+  .tabs a,
+  .tabs a::after {
+    --t: calc(var(--r) * 0.7673);
+    --tb: calc(var(--rb) * 0.7673);
+    clip-path: shape(
+      from calc(var(--vx) - var(--tb)) 100%,
+      arc to calc(var(--vx) + var(--tb) * 0.2588) calc(100% - var(--tb) * 0.9659) of var(--rb) ccw,
+      line to calc(var(--tl) - var(--t) * 0.2588) calc(var(--t) * 0.9659),
+      arc to calc(var(--tl) + var(--t)) 0 of var(--r) cw,
+      hline to calc(100% - var(--tl) - var(--t)),
+      arc to calc(100% - var(--tl) + var(--t) * 0.2588) calc(var(--t) * 0.9659) of var(--r) cw,
+      line to calc(100% - var(--vx) - var(--tb) * 0.2588) calc(100% - var(--tb) * 0.9659),
+      arc to calc(100% - var(--vx) + var(--tb)) 100% of var(--rb) ccw,
+      close
+    );
+  }
+  /* The flare starts at the box edge, so the slanted sides sit --tb further in */
+  .tabs a {
+    --vx: calc(var(--tab-r) * 0.7673);
+    --tl: calc(var(--vx) + var(--tab-run));
+    --r: var(--tab-r);
+    --rb: var(--tab-r);
+  }
+  .tabs a::after {
+    --vx: calc(var(--tab-r) * 0.7673 + var(--tab-side));
+    --tl: calc(var(--tab-r) * 0.7673 + var(--tab-run) - var(--tab-top-w) * 0.26795 + var(--tab-side));
+    --r: max(1px, var(--tab-r) - var(--tab-top-w));
+    --rb: calc(var(--tab-r) + var(--tab-line));
+  }
+  /* Keep the sides crossing at mid-height: overlap by the run plus both flares */
+  .tabs li + li { margin-left: calc(-2.5rem * 0.26795 - 2 * 6px * 0.7673); }
+}
+
+/* Hover: color only, so it never looks like the active tab */
+.tabs a:hover { --tab-fill: var(--tab-hover); color: var(--purple-dark); }
+
+/* Keyboard focus: thicken the trapezoid's own outline; a rectangular outline
+   would be clipped by the scrolling row. */
+.tabs a:focus-visible {
+  outline: none;
+  --tab-edge: var(--purple-mid);
+  --tab-top-color: var(--purple-mid);
+  --tab-line: 2px;
+  --tab-top-w: 3px;
+  color: var(--purple-dark);
+}
+
+/* Active tab: purple top edge, covers the baseline. Same top as the others: 1px
+   taller, since it reaches down over the baseline. */
+.tabs a[aria-current="page"] {
+  --tab-h: calc(2.5rem + 1px);
+  --tab-fill: var(--manila-light);
+  --tab-top-color: var(--purple);
+  --tab-top-w: 3px;
+  margin-bottom: 0;
+  color: var(--purple);
+}
+.tabs a[aria-current="page"]:focus-visible { --tab-edge: var(--purple-mid); --tab-line: 2px; }
+
+/* Narrower tabs where they would otherwise drop below the logo (down to 1024px) */
+@media (max-width: 72rem) {
+  .tabs a { padding-inline: 1rem; font-size: 0.92rem; }
+}
+@media (max-width: 30rem) {
+  .tabs a { padding-inline: 1.1rem; font-size: 0.92rem; }
+}
+@media print { .tabs { display: none; } }

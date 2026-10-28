@@ -1,0 +1,5 @@
+# Site-wide switches.
+# menu: "tabs" draws the menu as index-card divider tabs (css/tabs.css and
+# _includes/nav-tabs.html). Any other value, or deleting this file, restores the
+# template B top-bar menu with ring markers.
+menu: tabs

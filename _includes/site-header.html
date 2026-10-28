@@ -1,9 +1,19 @@
-<header class="site-header">
-    <a class="wordmark" href="{{ '/' | relative_url }}">
-      <picture>
-        <source srcset="{{ '/assets/Otlet_wordmark_fancy.webp' | relative_url }}" type="image/webp">
-        <img src="{{ '/assets/Otlet_wordmark_fancy_1200.png' | relative_url }}" width="1200" height="276" alt="OTLET home">
-      </picture>
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="{{ '/home/' | relative_url }}" aria-label="OTLET home">
+      <img src="{{ '/assets/otlet-wordmark.webp' | relative_url }}" alt="OTLET" width="417" height="96">
+      <span class="tagline"><b>Own The Limits</b><i>Ethics in Tech</i></span>
     </a>
-    <p class="tagline"><strong>Own The Limits</strong> <em>Ethics in Tech</em></p>
-  </header>
+    {%- if site.data.options.menu == "tabs" %}
+    {% include nav-tabs.html %}
+    {%- else %}
+    <nav class="menu" aria-label="Main">
+      <ul>
+        {%- for item in site.data.nav %}
+        <li><a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+    {%- endif %}
+  </div>
+</header>

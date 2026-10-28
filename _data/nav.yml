@@ -1,7 +1,14 @@
-# Divider tabs, in order. Add a tab only when its page has content.
-- index: "01"
-  title: About
+# Main menu and footer links, in order. "Home" is /home/ while index.html is still the
+# live "Coming soon" page; point it at / when the home page replaces index.html.
+- title: Home
+  url: /home/
+- title: About
   url: /about/
-- index: "02"
-  title: Lineage
+- title: Advocacy
+  url: /advocacy/
+- title: Education
+  url: /education/
+- title: Lineage
   url: /lineage/
+- title: Contact
+  url: /contact/

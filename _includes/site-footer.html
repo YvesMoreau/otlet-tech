@@ -1,4 +1,24 @@
-<footer class="site-footer">
-    <p class="label">© {{ site.time | date: '%Y' }} OTLET</p>
-    <p class="label"><a href="{{ site.url }}">otlet.tech</a></p>
-  </footer>
+<footer class="footer">
+  <div class="wrap">
+    <div class="about">
+      <p class="name">OTLET</p>
+      <p class="tag">Own The Limits · <i>Ethics in Tech</i></p>
+      <p><span class="placeholder">[One sentence on what OTLET is.]</span></p>
+    </div>
+    <nav aria-label="Footer">
+      <h2>Pages</h2>
+      <ul>
+        {%- for item in site.data.nav %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+    <div>
+      <h2>Elsewhere</h2>
+      <ul>
+        <li><span class="placeholder">[Links: not defined]</span></li>
+      </ul>
+    </div>
+    <p class="base"><span>OTLET · Own The Limits · Ethics in Tech · otlet.tech</span><span>© {{ site.time | date: '%Y' }} OTLET</span></p>
+  </div>
+</footer>

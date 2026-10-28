@@ -449,6 +449,54 @@ h3 { color: var(--purple-dark); font-size: 1.25rem; line-height: 1.2; }
 /* Text still to be written; none may remain at publication */
 .placeholder { background: var(--mist); outline: 1px dashed var(--purple-mid); color: var(--purple-muted); }
 
+/* Home: featured boxes (report, news item, video), equal height, narrow gaps.
+   The video box is at least 16:9 and stretches with the row; the iframe fills it. */
+.features { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.6fr); gap: 0.5rem; }
+.feature {
+  background: var(--manila);
+  border: var(--rule);
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  color: var(--purple-dark);
+  min-width: 0;
+}
+.feature h2 { color: var(--purple); font-size: 1.4rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--purple); }
+.feature-video { position: relative; border: var(--rule); background: var(--purple-dark); min-width: 0; }
+.feature-video::before { content: ""; display: block; padding-top: 56.25%; }   /* at least 16:9; taller if the row is */
+.feature-video iframe,
+.video-facade { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-facade { display: block; overflow: hidden; color: var(--white); text-decoration: none; }
+.video-facade img { width: 100%; height: 100%; object-fit: cover; }
+.video-bar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--purple-dark);
+}
+.video-play { flex: 0 0 auto; width: 2.5rem; height: 2.5rem; }
+.video-play circle { fill: var(--purple); stroke: var(--white); stroke-width: 2; }
+.video-play path { fill: var(--white); }
+.video-text { display: grid; gap: 0.1rem; min-width: 0; }
+.video-title { font-weight: 500; line-height: 1.3; }
+.video-meta { font-family: var(--font-code); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--lavender); }
+.video-facade:hover .video-play circle { fill: var(--purple-mid); }
+.video-facade:hover .video-title { text-decoration: underline; }
+.video-facade:focus-visible { outline: 3px solid var(--purple-mid); outline-offset: -3px; }
+@media (max-width: 60rem) {
+  .features { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .feature-video { grid-column: 1 / -1; }
+}
+@media (max-width: 30rem) {
+  .features { grid-template-columns: minmax(0, 1fr); }
+  /* Caption bar below the thumbnail, not over it; the player, once loaded, keeps 16:9 */
+  .feature-video:has(.video-facade)::before { display: none; }
+  .video-facade { position: static; }
+  .video-facade img { height: auto; aspect-ratio: 16 / 9; }
+  .video-bar { position: static; }
+}
+
 /* Illustrations: comic-strip panel frame from the house style (section 5) */
 .plate { margin: 0; padding: 10px; max-width: var(--measure); background: var(--manila-light); border: var(--rule); }
 .plate img { display: block; width: 100%; height: auto; border: 3px solid var(--purple-dark); }

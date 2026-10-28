@@ -67,7 +67,7 @@ current menu item and timeline points.
 | `_includes/site-header.html` | Top bar: wordmark, live tagline, menu from `_data/nav.yml` (current item: `aria-current="page"`); tabs or ring menu per `_data/options.yml` |
 | `_includes/site-footer.html` | Dark footer: name, tagline, page links from `_data/nav.yml`, credit line |
 | `_data/nav.yml` | Menu and footer links, in order: Home, About, Advocacy, Education, Lineage, Contact |
-| `home.html` (`/home/`) | Home: hero with emblem, three-point dark band, Advocacy rows, quotation, call to action. Lorem ipsum |
+| `home.html` (`/home/`) | Home: hero with emblem; dark band with Report and News Item boxes and a YouTube video facade (thumbnail `assets/images/video-rqHdQIuQNMo.webp`, from YouTube; the player loads only on click, from youtube-nocookie.com); Advocacy rows, quotation, call to action. Lorem ipsum |
 | `about.html` (`/about/`) | Banner, principles (dark band), article with contents rail (What we do, Our name), call to action |
 | `lineage.html` (`/lineage/`) | Banner, article: the three founders (ring portraits), the Répertoire (Fig. 1), timeline, why it matters now (Fig. 2) |
 | `advocacy.html` (`/advocacy/`) | Banner, index rows (`301`…), three-point dark band, call to action. Lorem ipsum. Formerly Programs (`/programs/`) |
@@ -106,10 +106,8 @@ tops and flared bottoms. `clip-path: shape()` draws the curves; browsers without
 sharp trapezoids. Any other value restores the template B top-bar menu with ring markers
 (`.menu` in `css/site.css`), kept as the alternative.
 
-The house style does not yet describe this version (tabs as above, and template B's
-bands, pill buttons, rounded tiles and dark footer). `house-style.patch` (2026-10-28)
-proposes it, as a new section 4.1; until the user applies or rejects it, treat these
-points as settled for the site but not as house style.
+The house style describes this version: the tabs in section 4, and template B's bands,
+pill buttons, rounded tiles and dark footer in section 4.1 (applied 2026-10-28).
 
 The historical facts on About and Lineage were drafted from model knowledge, not checked
 sources; verify them (Mundaneum archives; Rayward, *The Universe of Information*, 1975)
@@ -169,5 +167,4 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
 
 ## Open questions
 - Home, Advocacy, Education, and Contact: Lorem ipsum only.
-- `house-style.patch`: the web-page rules (section 4.1), tabs, and illustration rights, for the user to apply on the Mac.
 - Whether `/` stays the "Coming soon" page or becomes the About page at launch.

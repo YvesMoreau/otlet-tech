@@ -93,38 +93,37 @@
 
 /* Rounded corners, where clip-path: shape() is supported (otherwise the sharp
    polygon above). At the top, each corner joins a 75° side to the top edge
-   (interior angle 105°); at the bottom, the side flares out into the baseline
-   (outside angle also 105°). Either arc meets each edge at r / tan 52.5° (0.7673 r)
-   from the vertex; along the side that is 0.2588 across and 0.9659 up or down
-   (sin and cos 15°). --vx: x of the bottom-left vertex; --tl: x of the top-left
-   vertex; --r, --rb: top and bottom radii. */
+   (interior angle 105°): the arc meets each edge at r / tan 52.5° (0.7673 r) from
+   the vertex, along the side 0.2588 across and 0.9659 down (sin and cos 15°).
+   At the bottom, the side flares out into the baseline: an arc centered at the box
+   edge, --tab-r above the bottom, meeting the side where the side's normal
+   (cos 15°, sin 15°) crosses it. The outline and the fill share that center, the
+   fill's radius one line wider, so the line keeps its weight round the flare.
+   --tl: x of the top-left vertex; --r: top radius; --rb: flare radius. */
 @supports (clip-path: shape(from 0 0, line to 1px 1px)) {
   .tabs a { --tab-r: 6px; }
   .tabs a,
   .tabs a::after {
     --t: calc(var(--r) * 0.7673);
-    --tb: calc(var(--rb) * 0.7673);
     clip-path: shape(
-      from calc(var(--vx) - var(--tb)) 100%,
-      arc to calc(var(--vx) + var(--tb) * 0.2588) calc(100% - var(--tb) * 0.9659) of var(--rb) ccw,
+      from 0 calc(100% - var(--tab-r) + var(--rb)),
+      arc to calc(var(--rb) * 0.9659) calc(100% - var(--tab-r) + var(--rb) * 0.2588) of var(--rb) ccw,
       line to calc(var(--tl) - var(--t) * 0.2588) calc(var(--t) * 0.9659),
       arc to calc(var(--tl) + var(--t)) 0 of var(--r) cw,
       hline to calc(100% - var(--tl) - var(--t)),
       arc to calc(100% - var(--tl) + var(--t) * 0.2588) calc(var(--t) * 0.9659) of var(--r) cw,
-      line to calc(100% - var(--vx) - var(--tb) * 0.2588) calc(100% - var(--tb) * 0.9659),
-      arc to calc(100% - var(--vx) + var(--tb)) 100% of var(--rb) ccw,
+      line to calc(100% - var(--rb) * 0.9659) calc(100% - var(--tab-r) + var(--rb) * 0.2588),
+      arc to 100% calc(100% - var(--tab-r) + var(--rb)) of var(--rb) ccw,
       close
     );
   }
-  /* The flare starts at the box edge, so the slanted sides sit --tb further in */
+  /* The flare starts at the box edge, so the slanted sides sit 0.7673 r further in */
   .tabs a {
-    --vx: calc(var(--tab-r) * 0.7673);
-    --tl: calc(var(--vx) + var(--tab-run));
+    --tl: calc(var(--tab-r) * 0.7673 + var(--tab-run));
     --r: var(--tab-r);
     --rb: var(--tab-r);
   }
   .tabs a::after {
-    --vx: calc(var(--tab-r) * 0.7673 + var(--tab-side));
     --tl: calc(var(--tab-r) * 0.7673 + var(--tab-run) - var(--tab-top-w) * 0.26795 + var(--tab-side));
     --r: max(1px, var(--tab-r) - var(--tab-top-w));
     --rb: calc(var(--tab-r) + var(--tab-line));

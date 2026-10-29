@@ -14,3 +14,5 @@ exclude:
   - claude-devcontainer.sh
   - vendor
   - node_modules
+  - HARDENING-PLAN.md
+  - misc

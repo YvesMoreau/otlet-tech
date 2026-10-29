@@ -484,7 +484,7 @@ h3 { color: var(--purple-dark); font-size: 1.25rem; line-height: 1.2; }
 .video-facade:hover .video-play circle { fill: var(--purple-mid); }
 .video-facade:hover .video-title { text-decoration: underline; }
 .video-facade:focus-visible { outline: 3px solid var(--purple-mid); outline-offset: -3px; }
-@media (max-width: 60rem) {
+@media (max-width: 67.5rem) {
   .features { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .feature-video { grid-column: 1 / -1; }
 }

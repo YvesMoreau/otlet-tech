@@ -1,8 +1,8 @@
 <header class="topbar">
   <div class="wrap">
-    <a class="logo" href="{{ '/home/' | relative_url }}" aria-label="OTLET home">
-      <img src="{{ '/assets/otlet-wordmark.webp' | relative_url }}" alt="OTLET" width="417" height="96">
-      <span class="tagline"><b>Own The Limits</b><i>Ethics in Tech</i></span>
+    <a class="logo" href="{{ '/home/' | relative_url }}" aria-label="{{ site.title }} home">
+      <img src="{{ '/assets/otlet-wordmark.webp' | relative_url }}" alt="{{ site.title }}" width="417" height="96">
+      <span class="tagline"><b>{{ site.expansion }}</b><i>{{ site.tagline }}</i></span>
     </a>
     {%- if site.data.options.menu == "tabs" %}
     {% include nav-tabs.html %}

@@ -275,6 +275,22 @@ h3 { color: var(--purple-dark); font-size: 1.25rem; line-height: 1.2; }
 .rows h3 { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.65rem); }
 .rows .arrow { color: var(--purple); font-size: 1.3rem; justify-self: end; }
 .rows p:not(.label) { font-size: 0.98rem; }
+/* Rows that are not links yet (planned items): same record layout, no arrow */
+.rows-static li > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1.1fr) minmax(0, 1.4fr);
+  align-items: baseline;
+  gap: 0.5rem 2rem;
+  padding: 1rem 0.5rem;
+}
+
+/* Track record: plain list of results, 1px rules between items */
+.record { list-style: none; margin: 0; padding: 0; display: grid; max-width: 52rem; border-top: 1px solid var(--purple); }
+.record li { padding: 0.9rem 0; border-bottom: var(--rule); }
+
+/* Key concepts: catalog-card terms in a wrapping row */
+.concepts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.concepts li { background: var(--white); border: var(--rule); padding: 0.4rem 0.8rem; font-family: var(--font-serif); }
 
 /* ---------- Quote ---------- */
 .quote { margin: 0; display: grid; gap: 1.2rem; max-width: 52rem; }
@@ -395,6 +411,7 @@ img.portrait { display: block; height: auto; }   /* round portrait with transpar
 }
 .footer .name { font-family: var(--font-head); font-weight: 600; font-size: 1.6rem; color: var(--white); letter-spacing: 0.02em; }
 .footer .tag { color: var(--lavender); }
+.footer .tag b { font-weight: 700; }
 .footer .tag i { font-weight: 500; }
 .footer h2 { font: 400 0.8rem/1.5 var(--font-code); letter-spacing: 0.02em; color: var(--lavender); margin-bottom: 0.7rem; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
@@ -419,6 +436,7 @@ img.portrait { display: block; height: auto; }   /* round portrait with transpar
   .limit:first-child { padding-top: 0; border-top: 0; }
   .rows a { grid-template-columns: minmax(0, 1fr) 2rem; }
   .rows a > * { grid-column: 1; }
+  .rows-static li > div { grid-template-columns: minmax(0, 1fr); }
   .rows .arrow { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
   .article { grid-template-columns: minmax(0, 1fr); }
   .toc { position: static; }
@@ -449,6 +467,9 @@ img.portrait { display: block; height: auto; }   /* round portrait with transpar
 /* ---------- Additions for the Jekyll site ---------- */
 /* Text still to be written; none may remain at publication */
 .placeholder { background: var(--mist); outline: 1px dashed var(--purple-mid); color: var(--purple-muted); }
+/* Facts to verify before publication (marked ⚑ in the content draft); none may remain */
+.verify { text-decoration: underline dotted var(--purple-mid); text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+.band-dark .verify { text-decoration-color: var(--lavender); }
 
 /* Home: featured boxes (report, news item, video), equal height, narrow gaps.
    The video box is at least 16:9 and stretches with the row; the iframe fills it. */
@@ -463,6 +484,7 @@ img.portrait { display: block; height: auto; }   /* round portrait with transpar
   color: var(--purple-dark);
   min-width: 0;
 }
+.feature .label { margin-bottom: -0.25rem; color: var(--purple-muted); }
 .feature h2 { color: var(--purple); font-size: 1.4rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--purple); }
 .feature-video { position: relative; border: var(--rule); background: var(--purple-dark); min-width: 0; }
 .feature-video::before { content: ""; display: block; padding-top: 56.25%; }   /* at least 16:9; taller if the row is */
@@ -481,6 +503,7 @@ img.portrait { display: block; height: auto; }   /* round portrait with transpar
 .video-play path { fill: var(--white); }
 .video-text { display: grid; gap: 0.1rem; min-width: 0; }
 .video-title { font-weight: 500; line-height: 1.3; }
+.video-caption { font-size: 0.9rem; line-height: 1.35; color: var(--manila-light); }
 .video-meta { font-family: var(--font-code); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--lavender); }
 .video-facade:hover .video-play circle { fill: var(--purple-mid); }
 .video-facade:hover .video-title { text-decoration: underline; }

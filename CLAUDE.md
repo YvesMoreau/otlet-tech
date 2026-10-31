@@ -62,17 +62,17 @@ current menu item and timeline points.
 
 | Path | Role |
 |---|---|
-| `_config.yml` | Site title, description, URL; `exclude` keeps `CLAUDE.md`, `Gemfile` etc. out of the build |
+| `_config.yml` | Names in one place (`title`, `expansion`, `tagline`, `legal_name`, `legal_status`, `email`: the "OTLET" trademark question and the legal name are open), default description, URL; `exclude` keeps `CLAUDE.md`, `Gemfile` etc. out of the build |
 | `_layouts/default.html` | Head (meta, Open Graph, JSON-LD), top bar, `<main id="main">`, footer. Pages set `layout: default` and supply the bands |
 | `_includes/site-header.html` | Top bar: wordmark, live tagline, menu from `_data/nav.yml` (current item: `aria-current="page"`); tabs or ring menu per `_data/options.yml` |
-| `_includes/site-footer.html` | Dark footer: name, tagline, page links from `_data/nav.yml`, credit line |
+| `_includes/site-footer.html` | Dark footer: name, tagline, one-sentence description, page links from `_data/nav.yml`, contact email, credit line, copyright of the legal name "(in formation)" |
 | `_data/nav.yml` | Menu and footer links, in order: Home, About, Advocacy, Education, Lineage, Contact |
-| `home.html` (`/home/`) | Home: hero with emblem; dark band with Report and News Item boxes and a YouTube video facade (thumbnail `assets/images/video-rqHdQIuQNMo.webp`, from YouTube; the player loads only on click, from youtube-nocookie.com); Advocacy rows, quotation, call to action. Lorem ipsum |
-| `about.html` (`/about/`) | Banner, principles (dark band), article with contents rail (What we do, Our name), call to action |
+| `home.html` (`/home/`) | Home: hero with emblem; dark band with the Belarus advocacy item (shown only in local previews until `publish_belarus: true` in `_data/options.yml`), a News Item box (placeholder) and a YouTube video facade (thumbnail `assets/images/video-rqHdQIuQNMo.webp`, from YouTube; the player loads only on click, from youtube-nocookie.com; the speaker's name stays out of the page copy); Advocacy rows (placeholders), "How we work" pillars, closing call to action |
+| `about.html` (`/about/`) | Banner, principles (dark band), article with contents rail (What we do, Why culture, Why Europe, How we use AI, Independence, Our name), call to action (placeholder) |
 | `lineage.html` (`/lineage/`) | Banner, article: the three founders (ring portraits), the Répertoire (Fig. 1), timeline, why it matters now (Fig. 2) |
-| `advocacy.html` (`/advocacy/`) | Banner, index rows (`301`…), three-point dark band, call to action. Lorem ipsum. Formerly Programs (`/programs/`) |
-| `education.html` (`/education/`) | Banner, index rows (`401`…), call to action. Lorem ipsum |
-| `contact.html` (`/contact/`) | Lorem ipsum. The contact form is not connected to any mail service; a short inline script says so on submit |
+| `advocacy.html` (`/advocacy/`) | Banner, "How we work" (dark band), track record of the work OTLET builds on (`.record`), case index `301`–`305` (placeholders with planning titles), call to action. Formerly Programs (`/programs/`) |
+| `education.html` (`/education/`) | Banner, planned offering `401`–`405` "in preparation" (`.rows-static`: rows without links), key concepts (`.concepts`), call to action |
+| `contact.html` (`/contact/`) | Banner, form, contact details (email only, no postal address). The form is not connected to any mail service; a short inline script says so on submit. The service chosen must be GDPR-compliant and must not pass messages to an AI pipeline without the sender's knowledge |
 | `css/site.css` | Template B stylesheet with the project's `@font-face` rules prepended, plus `.placeholder` and `.plate` |
 
 `index.html` stays the live "Coming soon" page, so Home lives at `/home/` for now. At
@@ -97,7 +97,8 @@ and `.content` sections; `.prose` (Source Serif 4, 38em measure); `.people`/`.pe
 (ring portraits); `.timeline`; `.facts` (definition list); `.tile`; `.btn-primary`/`.btn-ghost`;
 `.label` (Fira Code catalog label). Additions: `.plate` frames an illustration as a
 comic-strip panel (house style, section 5); `.placeholder` marks text still to be written
-(dashed outline); none may remain at publication.
+(dashed outline); `.verify` marks facts the founder must check (dotted underline; ⚑ in
+the content draft); none of either may remain at publication.
 
 Menu: `_data/options.yml` sets `menu: tabs`, which draws the menu as divider tabs
 (`_includes/nav-tabs.html`, `css/tabs.css`, loaded only in that case): right-aligned
@@ -166,6 +167,12 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
 - `.devcontainer/`, `.vscode/` and `claude-devcontainer.sh` are environment files and
   are git-ignored. Do not commit them.
 
+## Content
+Page copy comes from `misc/website_content.md` (draft of 2026-10-31, from the
+`otlet-agent` planning workspace), which also sets rules for public content: OTLET is
+"in formation" (no claims of a legal entity, team, or running programs); the founder is
+not named on the site; every advocacy item needs the founder's sign-off.
+
 ## Open questions
-- Home, Advocacy, Education, and Contact: Lorem ipsum only.
+- Home News Item, the advocacy index, and the About call to action: no content yet.
 - Whether `/` stays the "Coming soon" page or becomes the About page at launch.

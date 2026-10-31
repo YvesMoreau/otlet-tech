@@ -1,5 +1,12 @@
+# Names in one place: the trademark question on "OTLET" is open, and the legal
+# name is not final. Layout, header, footer, and pages read them from here.
 title: OTLET
-description: "OTLET: Own The Limits. Ethics in Tech."
+expansion: Own The Limits
+tagline: Ethics in Tech
+legal_name: "Otlet–La Fontaine Alliance"
+legal_status: in formation
+email: info@otlet.tech
+description: "OTLET works with engineers, researchers, and students to make ethical responsibility part of how technology is built — through education, accountability, and a European network."
 url: "https://otlet.tech"
 baseurl: ""
 

@@ -1,9 +1,9 @@
 <footer class="footer">
   <div class="wrap">
     <div class="about">
-      <p class="name">OTLET</p>
-      <p class="tag">Own The Limits · <i>Ethics in Tech</i></p>
-      <p><span class="placeholder">[One sentence on what OTLET is.]</span></p>
+      <p class="name">{{ site.title }}</p>
+      <p class="tag"><b>{{ site.expansion }}</b> · <i>{{ site.tagline }}</i></p>
+      <p>{{ site.title }} is an independent nonprofit {{ site.legal_status }}, based in Brussels, that works to make ethical responsibility a lived practice in the tech community.</p>
     </div>
     <nav aria-label="Footer">
       <h2>Pages</h2>
@@ -14,11 +14,11 @@
       </ul>
     </nav>
     <div>
-      <h2>Elsewhere</h2>
+      <h2>Contact</h2>
       <ul>
-        <li><span class="placeholder">[Links: not defined]</span></li>
+        <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
       </ul>
     </div>
-    <p class="base"><span>OTLET · Own The Limits · Ethics in Tech · otlet.tech</span><span>© {{ site.time | date: '%Y' }} OTLET</span></p>
+    <p class="base"><span>{{ site.title }} · {{ site.expansion }} · {{ site.tagline }} · otlet.tech</span><span>© {{ site.time | date: '%Y' }} {{ site.legal_name }} ({{ site.legal_status }})</span></p>
   </div>
 </footer>

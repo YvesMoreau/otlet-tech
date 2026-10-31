@@ -333,9 +333,9 @@ h3 { color: var(--purple-dark); font-size: 1.25rem; line-height: 1.2; }
 .facts dt { font-family: var(--font-code); font-size: 0.8rem; letter-spacing: 0.02em; color: var(--purple-muted); padding-top: 0.2rem; }
 .facts dd { margin: 0; }
 
-/* People: placeholder rings instead of portraits */
+/* People: round portraits in a 1px ring; an empty ring with a dashed span marks a missing one */
 .people { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.5rem; }
-.person { display: grid; gap: 0.6rem; justify-items: start; }
+.person { display: grid; gap: 0.6rem; justify-items: start; align-content: start; }
 .person .portrait {
   width: 8.5rem; aspect-ratio: 1; max-width: 100%;
   border-radius: 50%;
@@ -343,6 +343,7 @@ h3 { color: var(--purple-dark); font-size: 1.25rem; line-height: 1.2; }
   display: grid; place-items: center;
   background: var(--manila-light);
 }
+img.portrait { display: block; height: auto; }   /* round portrait with transparent corners */
 .person .portrait span { width: 62%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed var(--manila-deep); }
 
 /* Timeline */

@@ -114,7 +114,8 @@ sources; verify them (Mundaneum archives; Rayward, *The Universe of Information*
 before publishing.
 
 Page images are in `assets/images/` (WebP from the less saturated
-`Otlet_transformed_photograph/image1_612387.jpg` and `image6_612387.jpg`). They are
+`Otlet_transformed_photograph/image1_612387.jpg` and `image6_612387.jpg`; the Lineage
+portraits `portrait-*.webp`, 320 px, from `trio_*_612387_round.png`). They are
 git-ignored until publication. The original photographs are public domain (user,
 2026-10-21). Before a page that uses them is published: record who made the purple
 engraving-style transformations and the source of each original photograph, then

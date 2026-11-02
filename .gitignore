@@ -7,6 +7,10 @@ assets/*
 !assets/Otlet_stacked.png
 !assets/Otlet_stacked.webp
 !assets/icons/
+# High-resolution emblem master (8192 px), not used by the page
+!assets/Otlet_emblem_high-res.png
+# Its generator's installed dependencies (tools/emblem/README.md)
+tools/emblem/node_modules/
 
 # Pages not yet public (remove a line to publish that page)
 home.html

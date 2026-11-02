@@ -23,3 +23,5 @@ exclude:
   - node_modules
   - HARDENING-PLAN.md
   - misc
+  - assets/Otlet_emblem_high-res.png
+  - tools

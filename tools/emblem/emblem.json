@@ -1,0 +1,6 @@
+{"size":8192,"tile":1024,"zoom":1,
+ "colors":{"polygonCol":"#612387","edgeCol":"#CFBDF5","vertCol":"#FFFFFF","invVertCol":"#FFFFFF","invPolygonCol":"#612387","bgCol":"#612387"},
+ "params":{"pValue":3,"qValue":7,"eThickness":0.015,"modelIdx":0,"doVerts":true,"doInvVerts":false,"doOrns":false,
+  "preciseEdges":true,"doV0V1":true,"doV1V2":false,"doV2V0":true,"doEdges":true,"doInvPol":false,"doParity":false,
+  "doSolidColor":true,"doSnake":false,"nIterations":100,"nSamples":3},
+ "rim":{"fraction":0.0182,"color":"#612387"}}

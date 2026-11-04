@@ -1,0 +1,5 @@
+{%- comment %} aria-current for a menu item: "page" on the item's own page, "true" on a
+page below it (/advocacy/reports/ under /advocacy/). Expects the loop variable `item`. {% endcomment -%}
+{%- assign n = item.url | size -%}
+{%- assign head = page.url | slice: 0, n -%}
+{%- if page.url == item.url %} aria-current="page"{% elsif head == item.url and item.url != "/" %} aria-current="true"{% endif -%}

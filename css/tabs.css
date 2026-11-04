@@ -37,7 +37,7 @@
 .tabs li + li { margin-left: calc(-2.5rem * 0.26795); }
 .tabs a:hover,
 .tabs a:focus-visible { z-index: 1; }
-.tabs a[aria-current="page"] { z-index: 2; }
+.tabs a[aria-current] { z-index: 2; }
 
 /* The link itself is clipped to the trapezoid, so overlapping tabs only take
    clicks inside their visible shape. ::before is the outline (top strip in
@@ -148,7 +148,7 @@
 
 /* Active tab: purple top edge, covers the baseline. Same top as the others: 1px
    taller, since it reaches down over the baseline. */
-.tabs a[aria-current="page"] {
+.tabs a[aria-current] {
   --tab-h: calc(2.5rem + 1px);
   --tab-fill: var(--manila-light);
   --tab-top-color: var(--purple);
@@ -156,7 +156,7 @@
   margin-bottom: 0;
   color: var(--purple);
 }
-.tabs a[aria-current="page"]:focus-visible { --tab-edge: var(--purple-mid); --tab-line: 2px; }
+.tabs a[aria-current]:focus-visible { --tab-edge: var(--purple-mid); --tab-line: 2px; }
 
 /* Narrower tabs where they would otherwise drop below the logo (down to 1024px) */
 @media (max-width: 72rem) {

@@ -2,7 +2,7 @@
 
 ## Project
 Static web site for an organization called OTLET, published with GitHub Pages
-from `YvesMoreau/otlet-tech` (branch `main`) at https://otlet.tech
+from `YvesMoreau/otlet-tech-web` (branch `main`) at https://otlet.tech
 (`www.otlet.tech` redirects to the apex). The `CNAME` file must stay in the repo root.
 
 The site emphasizes the lineage of the organization with the work of Paul Otlet,
@@ -71,6 +71,7 @@ current menu item and timeline points.
 | `about.html` (`/about/`) | Banner, principles (dark band), article with contents rail (What we do, Why culture, Why Europe, How we use AI, Independence, Our name), call to action (placeholder) |
 | `lineage.html` (`/lineage/`) | Banner, article: the three founders (ring portraits), the Répertoire (Fig. 1), timeline, why it matters now (Fig. 2) |
 | `advocacy.html` (`/advocacy/`) | Banner, "How we work" (dark band), track record of the work OTLET builds on (`.record`), case index `301`–`305` (placeholders with planning titles), call to action. Formerly Programs (`/programs/`) |
+| `reports.html` (`/advocacy/reports/`) | Below Advocacy, not in the menu (Advocacy's tab is marked current through `_includes/nav-current.html`). Banner with breadcrumb, index of full reports (`.rows`); the Belarus report is listed only when `publish_belarus` allows, and will sit at `/advocacy/reports/belarus/`. Linked from Advocacy's case index |
 | `education.html` (`/education/`) | Banner, planned offering `401`–`405` "in preparation" (`.rows-static`: rows without links), key concepts (`.concepts`), call to action |
 | `contact.html` (`/contact/`) | Banner, form, contact details (email only, no postal address). The form is not connected to any mail service; a short inline script says so on submit. The service chosen must be GDPR-compliant and must not pass messages to an AI pipeline without the sender's knowledge |
 | `css/site.css` | Template B stylesheet with the project's `@font-face` rules prepended, plus `.placeholder` and `.plate` |
@@ -84,7 +85,7 @@ Page front matter: `title` (omit on Home), `permalink`, optional `description`, 
 `noindex: true` while the page is a draft. Use `relative_url` for every internal link and
 asset path.
 
-All six pages are git-ignored, so they are not published. To publish a page: remove its
+All seven pages are git-ignored, so they are not published. To publish a page: remove its
 line from `.gitignore`, drop `noindex`, clear its `.placeholder` text, and whitelist the
 assets it uses (`otlet-wordmark.webp`, `otlet-emblem.webp`, `og-image.jpg` are used by the
 layout or Home and are not yet whitelisted).
@@ -151,7 +152,7 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
   settings, and `/mnt/otlet-shared`. Anything installed with `apt` or `gem` is lost
   when the container is rebuilt.
 - GitHub: `gh` holds a fine-grained token, and git uses it for github.com through
-  gh's credential helper. The token can push to `YvesMoreau/otlet-tech`. Claude
+  gh's credential helper. The token can push to `YvesMoreau/otlet-tech-web`. Claude
   sessions are denied `gh` commands by the managed settings; there is no rule against
   `git push`.
 - Push only when the user asks. A push to `main` deploys to otlet.tech within about a

@@ -153,8 +153,8 @@ Source Serif 4 400/400 italic/600. The Source Serif 4 license is Adobe's origina
   when the container is rebuilt.
 - GitHub: `gh` holds a fine-grained token, and git uses it for github.com through
   gh's credential helper. The token can push to `YvesMoreau/otlet-tech-web`. Claude
-  sessions are denied `gh` commands by the managed settings; there is no rule against
-  `git push`.
+  sessions are denied `gh` commands by the managed settings, and a hook there asks the
+  user to confirm any `git push`.
 - Push only when the user asks. A push to `main` deploys to otlet.tech within about a
   minute. Before pushing, check that no git-ignored draft (pages, images, notes) has
   been staged.
